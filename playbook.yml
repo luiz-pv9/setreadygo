@@ -1,0 +1,8 @@
+---
+- hosts: all
+  sudo: true
+  roles:
+    - utils-0.1
+    - node-5.1
+    - elixir-1.2
+    - postgres-9.3

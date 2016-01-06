@@ -1,0 +1,7 @@
+---
+
+erlang_url: https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_18.2-1~ubuntu~trusty_amd64.deb
+
+elixir_url: https://github.com/elixir-lang/elixir/archive/v1.2.0.tar.gz
+
+elixir_target: elixir-1.2.0

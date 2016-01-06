@@ -1,0 +1,26 @@
+---
+
+- name: Check for node's executable
+  stat: path=/usr/local/bin/node
+  register: node_stat
+
+- name: Downloading compiled node.js 5.1
+  get_url: url={{ node_url }} dest=/tmp/node.tar.gz
+  when: node_stat.stat.exists == False
+
+- name: Checking node binaries existance
+  stat: path=/tmp/node.tar.gz
+  register: node_st
+
+- name: Extract node binaries (if exists)
+  unarchive: src=/tmp/node.tar.gz dest=/tmp copy=no
+  when: node_st.stat.exists == True
+
+- name: Copying binaries to /usr/local (if exists)
+  shell: cp -r /tmp/{{ node_target }}/* /usr/local
+  when: node_st.stat.exists == True
+
+- name: Remove archive (if exists)
+  shell: rm -fr /tmp/node.tar.gz /tmp/{{ node_target }}
+  when: node_st.stat.exists == True
+

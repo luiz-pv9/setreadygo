@@ -1,0 +1,16 @@
+---
+
+- name: Installing build-essential
+  apt: pkg=build-essential state=installed
+
+- name: Installing curl
+  apt: pkg=curl state=installed
+
+- name: Installing git
+  apt: pkg=git state=installed
+
+- name: Installing tree
+  apt: pkg=tree state=installed
+
+- name: Ensures inotify
+  apt: pkg=inotify-tools state=installed

@@ -1,0 +1,53 @@
+---
+
+### Erlang
+
+- name: Checks for erlang's compiler
+  stat: path=/usr/bin/erlc
+  register: erlc_stat
+
+- name: Downloading Erlang (BEAM)
+  get_url: url={{ erlang_url }} dest=/tmp/erlang.deb
+  when: erlc_stat.stat.exists == False
+
+- name: Checks for erlang's installer
+  stat: path=/tmp/erlang.deb
+  register: erlang_stat
+
+- name: Installing Erlang (BEAM)
+  apt: deb=/tmp/erlang.deb
+  when: erlang_stat.stat.exists == True
+
+- name: Cleaning up
+  shell: rm /tmp/erlang.deb
+  when: erlang_stat.stat.exists == True
+
+### Elixir
+
+- name: Checks for elixir's compiler
+  stat: path=/usr/local/{{ elixir_target }}/bin/elixirc
+  register: elixirc_stat
+
+- name: Downloading elixir's 1.2 source code 
+  get_url: url={{ elixir_url }} dest=/tmp/elixir.tar.gz
+  when: elixirc_stat.stat.exists == False
+
+- name: Checks for elixir's source
+  stat: path=/tmp/elixir.tar.gz
+  register: elixir_stat
+
+- name: Extract elixir's source
+  unarchive: src=/tmp/elixir.tar.gz dest=/usr/local copy=no
+  when: elixir_stat.stat.exists == True
+
+- name: Compiling elixir
+  shell: cd /usr/local/{{ elixir_target }} && make clean test
+  when: elixir_stat.stat.exists == True
+
+- name: Adds elixir's bin directory to the PATH
+  shell: echo "export PATH=\"/usr/local/{{ elixir_target }}/bin:$PATH\"" >> /etc/profile
+  when: elixir_stat.stat.exists == True
+
+- name: Cleaning up
+  shell: rm -rf /tmp/elixir.tar.gz
+  when: elixir_stat.stat.exists == True

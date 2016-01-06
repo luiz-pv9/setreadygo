@@ -1,0 +1,7 @@
+---
+
+- name: Installing postgresql-9.3
+  apt: pkg=postgresql-9.3 state=installed
+
+- name: Starting daemon
+  service: name=postgresql state=started

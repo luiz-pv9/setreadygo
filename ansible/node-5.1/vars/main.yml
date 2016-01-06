@@ -1,0 +1,7 @@
+---
+
+# Full url to download node's compiled binaries.
+node_url: https://nodejs.org/dist/v5.3.0/node-v5.3.0-linux-x64.tar.gz
+
+# Name of the directory extracted from the archive
+node_target: node-v5.3.0-linux-x64
